@@ -39,6 +39,11 @@ The conventions below apply once one is added, and describe how to add it.
 - Every schema change is a migration. Do not alter the schema with ad-hoc SQL.
 - Create with `npx wrangler d1 migrations create <db> <description>`.
 - List with `npx wrangler d1 migrations list <db>`.
-- Apply locally with `npx wrangler d1 migrations apply <db> --local`.
-- **Never apply migrations to the remote database.** Do not run `migrations apply` with
-  `--remote`. Remote schema changes are the user's decision to make and execute.
+- Apply locally with `npm run db:migrate:local` (or `npx wrangler d1 migrations apply <db> --local`).
+- **Never apply migrations to the remote database** unless the user explicitly requests it. Remote schema changes are the user's decision to make and execute.
+
+## Local development
+
+- `wrangler.jsonc` sets `"remote": true` on the D1 binding so `npm run dev` writes to the Cloudflare dashboard database, not a local-only copy in `.wrangler/state/`.
+- Wrangler enables remote bindings by default during local development; no extra `next.config.ts` changes are required beyond `initOpenNextCloudflareForDev()`.
+- To use a local-only D1 instead, remove `"remote": true`, apply local migrations, and query with `--local` wrangler commands.
