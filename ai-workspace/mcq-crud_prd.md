@@ -1053,7 +1053,7 @@ Extend `src/lib/auth/test/mock-d1.ts` (or add `src/lib/mcq/test/mock-d1-mcq.ts`)
 
 
 
-### Phase 7: Frontend — Preview and Delete Flows — PLANNED
+### Phase 7: Frontend — Preview and Delete Flows — COMPLETED
 
 **Objective:** Implement preview dialog with answer submission and delete confirmation dialog.
 
@@ -1092,9 +1092,9 @@ Extend `src/lib/auth/test/mock-d1.ts` (or add `src/lib/mcq/test/mock-d1-mcq.ts`)
 
 **Acceptance criteria:**
 
-- [ ] Preview does not leak correct answer before submit
-- [ ] Delete requires confirmation
-- [ ] TC-M7-01–TC-M7-08 GREEN
+- [x] Preview does not leak correct answer before submit
+- [x] Delete requires confirmation
+- [x] TC-M7-01–TC-M7-08 GREEN
 
 **Exit criteria:** All Phase 7 tests GREEN; user approves Phase 8.
 
@@ -1496,9 +1496,9 @@ When working with this PRD:
 ## Current Status
 
 **Last Updated:** September 2, 2026
-**Current Phase:** Phase 6 — Frontend Create/Edit Page
+**Current Phase:** Phase 7 — Frontend Preview and Delete Flows
 **Status:** COMPLETED
-**Next Steps:** Await user approval to begin Phase 7 (preview and delete flows).
+**Next Steps:** Await user approval to begin Phase 8 (attempts hardening).
 
 **Phase completion log:**
 
@@ -1511,12 +1511,8 @@ When working with this PRD:
 | 4     | COMPLETED | Yes                   |
 | 5     | COMPLETED | Yes                   |
 | 6     | COMPLETED | Yes (Phase 6 started) |
-| 7     | PLANNED   | —                     |
-| 4     | PLANNED | —                |
-| 5     | PLANNED | —                |
-| 6     | PLANNED | —                |
-| 7     | PLANNED | —                |
-| 8     | PLANNED | —                |
+| 7     | COMPLETED | Yes (Phase 7 started) |
+| 8     | PLANNED   | —                     |
 | 9     | PLANNED | —                |
 
 

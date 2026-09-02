@@ -13,5 +13,10 @@ export const MCQ_MESSAGES = {
 		"Exactly one answer choice must be marked as correct.",
 	notFound: "Multiple choice question not found.",
 	invalidSelectedChoice: "Selected answer is not valid for this question.",
+	selectAnswerRequired: "Please select an answer.",
+	previewCorrect: "Correct!",
+	previewIncorrect: "Incorrect.",
+	deleteConfirmation:
+		"Delete this multiple choice question? This action cannot be undone.",
 	somethingWentWrong: "Something went wrong. Please try again later.",
 } as const;
