@@ -1557,7 +1557,7 @@ When working with this PRD:
 **Last Updated:** September 2, 2026
 **Current Phase:** Phase 9 — Integration Testing and Final Validation
 **Status:** COMPLETED
-**Next Steps:** MCQ CRUD feature complete. Post-completion UX refinements (below) are implemented and ready to commit.
+**Next Steps:** MCQ CRUD feature complete — post-completion UX refinements committed, pushed, and deployed to production.
 
 **Post-completion UX refinements (September 2, 2026):**
 
@@ -1566,6 +1566,8 @@ When working with this PRD:
 | Dashboard MCQ display | `/dashboard` fetches and renders `McqListTable` so users see their questions immediately after sign-in |
 | Dashboard create action | Replaced "Manage Multiple Choice Questions" link with **Create Multiple Choice Question** button (top right) |
 | Single create button on empty list | Removed duplicate create button from `McqListTable` empty state; page header retains the sole create action (TC-M5-03, TC-M9-04) |
+
+**Release:** Commit `6c797f7` on `feature/mcq-crud-phase-2`; deployed to https://ai-sprints-quizemaker.arunkumar-hg.workers.dev (Version ID: `09e316e9-8525-4a20-9d12-398433906b18`).
 
 **Phase completion log:**
 
