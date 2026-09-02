@@ -305,7 +305,7 @@ describe("Phase 9 MCQ integration and final validation (TC-M9-01 – TC-M9-08)",
 		expect(main).toHaveClass("p-4");
 		expect(
 			screen.getAllByRole("button", { name: "Create Multiple Choice Question" }),
-		).toHaveLength(2);
+		).toHaveLength(1);
 	});
 
 	it("TC-M9-05: keyboard navigation on form and dialogs", async () => {

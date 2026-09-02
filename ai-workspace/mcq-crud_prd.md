@@ -1,13 +1,13 @@
 Date created: September 1, 2026
-Date last modified: September 1, 2026
+Date last modified: September 2, 2026
 
 # Multiple Choice Question (MCQ) CRUD — Technical PRD
 
 ## Overview/Problem
 
-Quiz Maker authenticated users can sign in and reach a protected Dashboard, but they cannot yet create, manage, preview, or practice multiple choice questions. Without MCQ CRUD, the application has no question content layer to build future quiz assembly, assignment, or reporting features on top of.
+Quiz Maker authenticated users can sign in, reach a protected Dashboard, and create, manage, preview, and practice multiple choice questions they own. The MCQ CRUD module is the application's first quiz-domain content layer and establishes patterns for future quiz assembly, assignment, and reporting features.
 
-Authenticated quiz authors need a dedicated workflow to define a question, configure answer choices (with one correct answer), review their work via preview, and maintain their question library over time. This capability expands the Dashboard area from a placeholder into the first real quiz-domain feature while reusing the authentication, D1 persistence, service-layer, and TDD conventions established in Sprint 0.
+Authenticated quiz authors define questions, configure answer choices (with one correct answer), review work via preview, and maintain their question library over time. After sign-in, the Dashboard home at `/dashboard` shows their MCQs immediately; a dedicated list page at `/dashboard/mcqs` provides the same table experience. The feature reuses authentication, D1 persistence, service-layer, and TDD conventions from Sprint 0.
 
 ---
 
@@ -27,6 +27,10 @@ We believe that delivering a complete MCQ create-read-update-delete experience�
 
 ### In Scope
 
+- **Dashboard home** at `/dashboard` (protected route; sign-in redirect target)
+  - Welcome header with user name
+  - **Create Multiple Choice Question** button → `/dashboard/mcqs/new`
+  - Reuses `McqListTable` to show the user's MCQs (or empty state when none exist)
 - **MCQ listing page** at `/dashboard/mcqs` (protected route under the authenticated Dashboard layout)
   - shadcn/ui **Table** showing MCQ name, question/description, created date, and Actions column
   - **Create Multiple Choice Question** button navigating to the create page
@@ -81,9 +85,19 @@ We believe that delivering a complete MCQ create-read-update-delete experience�
 
 
 
+### Dashboard (Post Sign-In)
+
+1. User signs in successfully → system redirects to `/dashboard`.
+2. System validates session; unauthenticated users redirect to Sign In.
+3. System loads MCQs where `created_by_user_id` matches the current user.
+4. User sees welcome header, **Create Multiple Choice Question** button (top right), and their MCQ table (or empty-state message when they have no MCQs).
+5. User may create, preview, edit, or delete MCQs from the dashboard table (same row actions as the list page).
+
+
+
 ### MCQ List (Authenticated User)
 
-1. User navigates to `/dashboard/mcqs` (or follows a link from Dashboard).
+1. User navigates to `/dashboard/mcqs` (dedicated list route; same table component as Dashboard).
 2. System validates session; unauthenticated users redirect to Sign In.
 3. System loads MCQs where `created_by_user_id` matches the current user, ordered by `created_at` descending.
 4. User sees a table with name, question, created date, and Actions menu per row.
@@ -588,9 +602,19 @@ npx shadcn@latest add @shadcn/dropdown-menu
 
 Optional if needed: `@shadcn/alert-dialog` (or use `dialog` for delete confirmation), `@shadcn/radio-group` for correct-answer selection on the form.
 
-#### Dashboard Link (minor)
+#### Dashboard Home (`/dashboard`)
 
-Update Dashboard placeholder or header nav to link to `/dashboard/mcqs` (implementation detail in Phase 5).
+**Access:** Authenticated only (inherits `dashboard/layout.tsx` guard). Sign-in and sign-up (already authenticated) redirect here.
+
+**Layout:**
+
+- Welcome heading with user full name
+- Subtitle: signed-in confirmation
+- Primary button (top right on `sm+`): **Create Multiple Choice Question** → `/dashboard/mcqs/new`
+- Section title: "Multiple Choice Questions" with short description
+- **Table:** reuses `McqListTable` with the user's MCQs (same columns and row actions as the list page)
+
+**Empty state:** Message only in the table area; create button remains in the page header (no duplicate button).
 
 #### MCQ List Page (`/dashboard/mcqs`)
 
@@ -616,7 +640,7 @@ Update Dashboard placeholder or header nav to link to `/dashboard/mcqs` (impleme
 - **Preview** → opens Preview Dialog (client component)
 - **Delete** → opens Delete Confirmation Dialog
 
-**Empty state:** Message such as "You have no multiple choice questions yet." with create button.
+**Empty state:** Message such as "You have no multiple choice questions yet." (create button remains in the page header only).
 
 **Loading / error:** Show appropriate feedback if API fetch fails.
 
@@ -963,8 +987,8 @@ Extend `src/lib/auth/test/mock-d1.ts` (or add `src/lib/mcq/test/mock-d1-mcq.ts`)
 1. **Write failing tests (RED)** TC-M5-01 through TC-M5-08
 2. Create `src/app/dashboard/mcqs/page.tsx` (server component fetches list or delegates to client fetch)
 3. Create client components: `mcq-list-table.tsx`, `mcq-actions-menu.tsx`
-4. Add Dashboard link to MCQs
-5. Implement empty state and loading/error UI
+4. Integrate MCQ list on Dashboard home (`/dashboard`) and dedicated list route
+5. Implement empty state (message only in table; single create button in page header) and loading/error UI
 6. Implement until TC-M5-01–TC-M5-08 are **GREEN**
 
 **Tests to write first (RED):**
@@ -974,7 +998,7 @@ Extend `src/lib/auth/test/mock-d1.ts` (or add `src/lib/mcq/test/mock-d1-mcq.ts`)
 | -------- | --------- | ---------------------------------------------------- | ---------------------------------------- |
 | TC-M5-01 | Component | List page renders table headers                      | Name, Question, Created, Actions visible |
 | TC-M5-02 | Component | Create button navigates to /dashboard/mcqs/new       | Link href correct                        |
-| TC-M5-03 | Component | Empty state shown when no MCQs                       | Empty message displayed                  |
+| TC-M5-03 | Component | Empty state shown when no MCQs                       | Empty message displayed; no create button in table empty state |
 | TC-M5-04 | Component | MCQ rows render name, question, created date         | Row cells populated                      |
 | TC-M5-05 | Component | Actions menu has Edit, Preview, Delete               | Three menu items                         |
 | TC-M5-06 | Flow      | Unauthenticated user redirected from /dashboard/mcqs | Redirect to sign-in                      |
@@ -1240,6 +1264,7 @@ Extend `src/lib/auth/test/mock-d1.ts` (or add `src/lib/mcq/test/mock-d1-mcq.ts`)
 | `src/app/api/mcqs/[id]/route.ts`            | Read + update + delete API           |
 | `src/app/api/mcqs/[id]/preview/route.ts`    | Preview API                          |
 | `src/app/api/mcqs/[id]/attempts/route.ts`   | Attempt API                          |
+| `src/app/dashboard/page.tsx`                | Dashboard home (welcome + MCQ table) |
 | `src/app/dashboard/mcqs/page.tsx`           | List page                            |
 | `src/app/dashboard/mcqs/new/page.tsx`       | Create page                          |
 | `src/app/dashboard/mcqs/[id]/edit/page.tsx` | Edit page                            |
@@ -1324,11 +1349,21 @@ Follow `src/lib/auth/users.ts`:
 
 
 
+### Dashboard Home
+
+- [x] Successful sign-in redirects to `/dashboard`
+- [x] Authenticated user sees welcome header and create button
+- [x] User's MCQs display in `McqListTable` when they have questions
+- [x] Empty state displays when user has no MCQs (message only; no duplicate create button)
+- [x] Create button navigates to `/dashboard/mcqs/new`
+
+
+
 ### List Page
 
 - [x] Authenticated user can open `/dashboard/mcqs` and see a table of their MCQs
 - [x] Table shows name, question (truncated), created date, and Actions column
-- [x] Empty state displays when user has no MCQs
+- [x] Empty state displays when user has no MCQs (message only; create button in page header only)
 - [x] Create button navigates to `/dashboard/mcqs/new`
 - [x] Unauthenticated user is redirected to Sign In
 
@@ -1522,7 +1557,15 @@ When working with this PRD:
 **Last Updated:** September 2, 2026
 **Current Phase:** Phase 9 — Integration Testing and Final Validation
 **Status:** COMPLETED
-**Next Steps:** MCQ CRUD feature complete — await user sign-off.
+**Next Steps:** MCQ CRUD feature complete. Post-completion UX refinements (below) are implemented and ready to commit.
+
+**Post-completion UX refinements (September 2, 2026):**
+
+| Change | Detail |
+| ------ | ------ |
+| Dashboard MCQ display | `/dashboard` fetches and renders `McqListTable` so users see their questions immediately after sign-in |
+| Dashboard create action | Replaced "Manage Multiple Choice Questions" link with **Create Multiple Choice Question** button (top right) |
+| Single create button on empty list | Removed duplicate create button from `McqListTable` empty state; page header retains the sole create action (TC-M5-03, TC-M9-04) |
 
 **Phase completion log:**
 

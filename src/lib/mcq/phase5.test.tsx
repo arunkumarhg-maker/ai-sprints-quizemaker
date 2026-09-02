@@ -82,8 +82,8 @@ describe("Phase 5 MCQ list page (TC-M5-01 – TC-M5-08)", () => {
 			screen.getByText("You have no multiple choice questions yet."),
 		).toBeInTheDocument();
 		expect(
-			screen.getByRole("button", { name: "Create Multiple Choice Question" }),
-		).toHaveAttribute("href", "/dashboard/mcqs/new");
+			screen.queryByRole("button", { name: "Create Multiple Choice Question" }),
+		).not.toBeInTheDocument();
 	});
 
 	it("TC-M5-04: MCQ rows render name, question, created date", () => {

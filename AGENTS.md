@@ -12,8 +12,9 @@ Keep it current. An out-of-date description here misleads every future conversat
 -->
 
 This is the Quiz Maker application. Sprint 0 authentication and the MCQ CRUD module are
-fully implemented: Sign Up, Sign In, Logout, session management, protected routes, Dashboard,
-and multiple-choice question create/list/edit/preview/delete with attempt recording.
+fully implemented: Sign Up, Sign In, Logout, session management, protected routes, Dashboard
+(with MCQ table on the home page), and multiple-choice question create/list/edit/preview/delete
+with attempt recording.
 All auth TDD cases (TC-1-01 through TC-6-08) and MCQ phase tests (TC-M2-01 through TC-M9-08)
 pass. The technical PRD in `ai-workspace/` is the source of truth for what is being built and
 for the current phase of work.

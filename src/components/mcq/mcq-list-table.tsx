@@ -1,12 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 
 import { McqActionsMenu } from "@/components/mcq/mcq-actions-menu";
 import { McqDeleteDialog } from "@/components/mcq/mcq-delete-dialog";
 import { McqPreviewDialog } from "@/components/mcq/mcq-preview-dialog";
-import { Button } from "@/components/ui/button";
 import {
 	Table,
 	TableBody,
@@ -43,13 +41,6 @@ export function McqListTable({
 				<p className="text-sm text-muted-foreground">
 					You have no multiple choice questions yet.
 				</p>
-				<Button
-					className="mt-4"
-					nativeButton={false}
-					render={<Link href="/dashboard/mcqs/new" />}
-				>
-					Create Multiple Choice Question
-				</Button>
 			</div>
 		);
 	}
