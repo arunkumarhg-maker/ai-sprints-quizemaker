@@ -6,7 +6,13 @@ import { createUser } from "@/lib/auth/users";
 import { getDb } from "@/lib/db";
 import { MCQ_MESSAGES } from "@/lib/mcq/messages";
 import { createMcq } from "@/lib/mcq/mcqs";
-import type { CreateMcqInput } from "@/lib/mcq/types";
+import type {
+	CreateMcqInput,
+	McqAttempt,
+	McqListItem,
+	McqWithChoices,
+	PreviewMcq,
+} from "@/lib/mcq/types";
 import { GET as listMcqs, POST as createMcqRoute } from "@/app/api/mcqs/route";
 import {
 	DELETE as deleteMcqRoute,
@@ -15,6 +21,14 @@ import {
 } from "@/app/api/mcqs/[id]/route";
 import { GET as previewMcqRoute, POST as previewPostRoute } from "@/app/api/mcqs/[id]/preview/route";
 import { POST as recordAttemptRoute } from "@/app/api/mcqs/[id]/attempts/route";
+
+type ApiErrorResponseBody = { error: string };
+type ValidationErrorResponseBody = { errors?: Record<string, string | undefined> };
+type McqListResponseBody = { mcqs: McqListItem[] };
+type McqResponseBody = { mcq: McqWithChoices };
+type DeleteResponseBody = { success: boolean };
+type PreviewResponseBody = { preview: PreviewMcq };
+type AttemptResponseBody = { attempt: McqAttempt; isCorrect: boolean };
 
 vi.mock("server-only", () => ({}));
 
@@ -114,7 +128,7 @@ describe("Phase 4 MCQ API routes (TC-M4-01 – TC-M4-14)", () => {
 	it("TC-M4-01: GET /api/mcqs without session returns 401", async () => {
 		const response = await listMcqs();
 		expect(response.status).toBe(401);
-		const body = await response.json();
+		const body = (await response.json()) as ApiErrorResponseBody;
 		expect(body.error).toBe("Unauthorized");
 	});
 
@@ -128,7 +142,7 @@ describe("Phase 4 MCQ API routes (TC-M4-01 – TC-M4-14)", () => {
 
 		const response = await listMcqs();
 		expect(response.status).toBe(200);
-		const body = await response.json();
+		const body = (await response.json()) as McqListResponseBody;
 		expect(body.mcqs).toHaveLength(1);
 		expect(body.mcqs[0].name).toBe(VALID_MCQ.name);
 	});
@@ -137,7 +151,7 @@ describe("Phase 4 MCQ API routes (TC-M4-01 – TC-M4-14)", () => {
 		await authenticateAs(ownerUser);
 		const response = await createMcqRoute(jsonRequest("POST", VALID_MCQ));
 		expect(response.status).toBe(201);
-		const body = await response.json();
+		const body = (await response.json()) as McqResponseBody;
 		expect(body.mcq.name).toBe(VALID_MCQ.name);
 		expect(body.mcq.choices).toHaveLength(2);
 	});
@@ -148,7 +162,7 @@ describe("Phase 4 MCQ API routes (TC-M4-01 – TC-M4-14)", () => {
 			jsonRequest("POST", { ...VALID_MCQ, name: "   " }),
 		);
 		expect(response.status).toBe(400);
-		const body = await response.json();
+		const body = (await response.json()) as ValidationErrorResponseBody;
 		expect(body.errors?.name).toBe(MCQ_MESSAGES.nameRequired);
 	});
 
@@ -160,7 +174,7 @@ describe("Phase 4 MCQ API routes (TC-M4-01 – TC-M4-14)", () => {
 			routeParams(created.id),
 		);
 		expect(response.status).toBe(200);
-		const body = await response.json();
+		const body = (await response.json()) as McqResponseBody;
 		expect(body.mcq.id).toBe(created.id);
 	});
 
@@ -202,7 +216,7 @@ describe("Phase 4 MCQ API routes (TC-M4-01 – TC-M4-14)", () => {
 			routeParams(created.id),
 		);
 		expect(response.status).toBe(200);
-		const body = await response.json();
+		const body = (await response.json()) as McqResponseBody;
 		expect(body.mcq.name).toBe("Updated Name");
 	});
 
@@ -216,7 +230,7 @@ describe("Phase 4 MCQ API routes (TC-M4-01 – TC-M4-14)", () => {
 			routeParams(created.id),
 		);
 		expect(response.status).toBe(200);
-		const body = await response.json();
+		const body = (await response.json()) as DeleteResponseBody;
 		expect(body.success).toBe(true);
 	});
 
@@ -257,7 +271,7 @@ describe("Phase 4 MCQ API routes (TC-M4-01 – TC-M4-14)", () => {
 			routeParams(created.id),
 		);
 		expect(response.status).toBe(200);
-		const body = await response.json();
+		const body = (await response.json()) as PreviewResponseBody;
 		expect(body.preview.choices).toHaveLength(2);
 		for (const choice of body.preview.choices) {
 			expect(choice).not.toHaveProperty("isCorrect");
@@ -276,7 +290,7 @@ describe("Phase 4 MCQ API routes (TC-M4-01 – TC-M4-14)", () => {
 			routeParams(created.id),
 		);
 		expect(response.status).toBe(201);
-		const body = await response.json();
+		const body = (await response.json()) as AttemptResponseBody;
 		expect(body.isCorrect).toBe(true);
 		expect(body.attempt.isCorrect).toBe(true);
 	});
@@ -289,7 +303,7 @@ describe("Phase 4 MCQ API routes (TC-M4-01 – TC-M4-14)", () => {
 			routeParams(created.id),
 		);
 		expect(response.status).toBe(400);
-		const body = await response.json();
+		const body = (await response.json()) as ApiErrorResponseBody;
 		expect(body.error).toBe(MCQ_MESSAGES.invalidSelectedChoice);
 	});
 
@@ -299,7 +313,7 @@ describe("Phase 4 MCQ API routes (TC-M4-01 – TC-M4-14)", () => {
 
 		const response = await listMcqs();
 		expect(response.status).toBe(500);
-		const body = await response.json();
+		const body = (await response.json()) as ApiErrorResponseBody;
 		expect(body.error).toBe(MCQ_MESSAGES.somethingWentWrong);
 		expect(JSON.stringify(body)).not.toContain("database exploded");
 		expect(JSON.stringify(body)).not.toContain("stack");

@@ -772,12 +772,12 @@ Extend `src/lib/auth/test/mock-d1.ts` (or add `src/lib/mcq/test/mock-d1-mcq.ts`)
 
 **Acceptance criteria:**
 
-- [ ] PRD covers all In Scope items
-- [ ] Database schema includes all three tables with FKs, indexes, and constraints
-- [ ] API contracts defined for all endpoints
-- [ ] UI routes and components specified
-- [ ] TDD test plan defined for Phases 2–9
-- [ ] Phase stop-and-approval protocol documented
+- [x] PRD covers all In Scope items
+- [x] Database schema includes all three tables with FKs, indexes, and constraints
+- [x] API contracts defined for all endpoints
+- [x] UI routes and components specified
+- [x] TDD test plan defined for Phases 2–9
+- [x] Phase stop-and-approval protocol documented
 
 **Exit criteria:** User explicitly approves PRD and authorizes Phase 2.
 
@@ -1221,32 +1221,44 @@ Extend `src/lib/auth/test/mock-d1.ts` (or add `src/lib/mcq/test/mock-d1-mcq.ts`)
 
 
 
-### Key Files (planned)
+### Key Files (implemented)
 
 
-| Path                                        | Purpose                    |
-| ------------------------------------------- | -------------------------- |
-| `migrations/0002_create_mcq_tables.sql`     | D1 schema for MCQ domain   |
-| `src/lib/mcq/types.ts`                      | Domain types               |
-| `src/lib/mcq/config.ts`                     | Limits and constants       |
-| `src/lib/mcq/messages.ts`                   | User-facing strings        |
-| `src/lib/mcq/schemas/mcq.ts`                | Zod schemas                |
-| `src/lib/mcq/mcqs.ts`                       | MCQ CRUD service           |
-| `src/lib/mcq/choices.ts`                    | Choice persistence helpers |
-| `src/lib/mcq/attempts.ts`                   | Attempt recording          |
-| `src/lib/mcq/authorization.ts`              | Ownership checks           |
-| `src/app/api/mcqs/route.ts`                 | List + create API          |
-| `src/app/api/mcqs/[id]/route.ts`            | Read + update + delete API |
-| `src/app/api/mcqs/[id]/preview/route.ts`    | Preview API                |
-| `src/app/api/mcqs/[id]/attempts/route.ts`   | Attempt API                |
-| `src/app/dashboard/mcqs/page.tsx`           | List page                  |
-| `src/app/dashboard/mcqs/new/page.tsx`       | Create page                |
-| `src/app/dashboard/mcqs/[id]/edit/page.tsx` | Edit page                  |
-| `src/components/mcq/mcq-list-table.tsx`     | Table component            |
-| `src/components/mcq/mcq-actions-menu.tsx`   | Dropdown actions           |
-| `src/components/mcq/mcq-form.tsx`           | Create/edit form           |
-| `src/components/mcq/mcq-preview-dialog.tsx` | Preview dialog             |
-| `src/components/mcq/mcq-delete-dialog.tsx`  | Delete confirmation        |
+| Path                                        | Purpose                              |
+| ------------------------------------------- | ------------------------------------ |
+| `migrations/0002_create_mcq_tables.sql`     | D1 schema for MCQ domain             |
+| `src/lib/mcq/types.ts`                      | Domain types                         |
+| `src/lib/mcq/config.ts`                     | Limits and constants                 |
+| `src/lib/mcq/messages.ts`                   | User-facing strings                  |
+| `src/lib/mcq/schemas/mcq.ts`                | Zod schemas                          |
+| `src/lib/mcq/mcqs.ts`                       | MCQ CRUD service                     |
+| `src/lib/mcq/choices.ts`                    | Choice persistence helpers           |
+| `src/lib/mcq/attempts.ts`                   | Attempt recording                    |
+| `src/lib/mcq/authorization.ts`              | Ownership checks                     |
+| `src/lib/mcq/api/helpers.ts`                | Shared API route helpers             |
+| `src/app/api/mcqs/route.ts`                 | List + create API                    |
+| `src/app/api/mcqs/[id]/route.ts`            | Read + update + delete API           |
+| `src/app/api/mcqs/[id]/preview/route.ts`    | Preview API                          |
+| `src/app/api/mcqs/[id]/attempts/route.ts`   | Attempt API                          |
+| `src/app/dashboard/mcqs/page.tsx`           | List page                            |
+| `src/app/dashboard/mcqs/new/page.tsx`       | Create page                          |
+| `src/app/dashboard/mcqs/[id]/edit/page.tsx` | Edit page                            |
+| `src/components/mcq/mcq-list-table.tsx`     | Table component                      |
+| `src/components/mcq/mcq-list-page-header.tsx` | List page header                   |
+| `src/components/mcq/mcq-actions-menu.tsx`   | Dropdown actions                     |
+| `src/components/mcq/mcq-form.tsx`           | Create/edit form                     |
+| `src/components/mcq/mcq-not-found.tsx`      | Edit not-found UI                    |
+| `src/components/mcq/mcq-preview-dialog.tsx` | Preview dialog                     |
+| `src/components/mcq/mcq-delete-dialog.tsx`  | Delete confirmation                  |
+| `src/lib/mcq/phase2.test.ts`                | Phase 2 tests (TC-M2-01–06)          |
+| `src/lib/mcq/phase3.test.ts`                | Phase 3 tests (TC-M3-01–18)          |
+| `src/app/api/mcqs/phase4.test.ts`           | Phase 4 tests (TC-M4-01–14)          |
+| `src/lib/mcq/phase5.test.tsx`               | Phase 5 tests (TC-M5-01–08)          |
+| `src/lib/mcq/phase6.test.tsx`               | Phase 6 tests (TC-M6-01–12)          |
+| `src/lib/mcq/phase7.test.tsx`               | Phase 7 tests (TC-M7-01–08)          |
+| `src/lib/mcq/phase8.test.ts`                | Phase 8 tests (TC-M8-01–06)          |
+| `src/lib/mcq/phase9.test.tsx`               | Phase 9 tests (TC-M9-01–08)          |
+| `tsconfig.vitest.json`                      | TypeScript project for Vitest/IDE    |
 
 
 
@@ -1522,9 +1534,9 @@ When working with this PRD:
 | 3     | COMPLETED | Yes                   |
 | 4     | COMPLETED | Yes                   |
 | 5     | COMPLETED | Yes                   |
-| 6     | COMPLETED | Yes (Phase 6 started) |
+| 6     | COMPLETED | Yes                   |
 | 7     | COMPLETED | Yes                   |
 | 8     | COMPLETED | Yes                   |
-| 9     | COMPLETED | Yes (Phase 9 started) |
+| 9     | COMPLETED | Yes                   |
 
 
