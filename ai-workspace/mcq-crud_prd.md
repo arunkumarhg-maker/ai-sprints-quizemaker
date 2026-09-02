@@ -1001,7 +1001,7 @@ Extend `src/lib/auth/test/mock-d1.ts` (or add `src/lib/mcq/test/mock-d1-mcq.ts`)
 
 
 
-### Phase 6: Frontend — Create/Edit Page — PLANNED
+### Phase 6: Frontend — Create/Edit Page — COMPLETED
 
 **Objective:** Build the MCQ form for create and edit with dynamic choices and validation.
 
@@ -1043,9 +1043,9 @@ Extend `src/lib/auth/test/mock-d1.ts` (or add `src/lib/mcq/test/mock-d1-mcq.ts`)
 
 **Acceptance criteria:**
 
-- [ ] Create and edit flows work end-to-end against API
-- [ ] Validation matches PRD messages
-- [ ] TC-M6-01–TC-M6-12 GREEN
+- [x] Create and edit flows work end-to-end against API
+- [x] Validation matches PRD messages
+- [x] TC-M6-01–TC-M6-12 GREEN
 
 **Exit criteria:** All Phase 6 tests GREEN; user approves Phase 7.
 
@@ -1496,9 +1496,9 @@ When working with this PRD:
 ## Current Status
 
 **Last Updated:** September 2, 2026
-**Current Phase:** Phase 5 — Frontend MCQ List Page
+**Current Phase:** Phase 6 — Frontend Create/Edit Page
 **Status:** COMPLETED
-**Next Steps:** Await user approval to begin Phase 6 (create/edit page).
+**Next Steps:** Await user approval to begin Phase 7 (preview and delete flows).
 
 **Phase completion log:**
 
@@ -1509,8 +1509,9 @@ When working with this PRD:
 | 2     | COMPLETED | Yes                   |
 | 3     | COMPLETED | Yes                   |
 | 4     | COMPLETED | Yes                   |
-| 5     | COMPLETED | Yes (Phase 5 started) |
-| 6     | PLANNED   | —                     |
+| 5     | COMPLETED | Yes                   |
+| 6     | COMPLETED | Yes (Phase 6 started) |
+| 7     | PLANNED   | —                     |
 | 4     | PLANNED | —                |
 | 5     | PLANNED | —                |
 | 6     | PLANNED | —                |
