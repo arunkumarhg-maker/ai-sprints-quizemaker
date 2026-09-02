@@ -893,7 +893,7 @@ Extend `src/lib/auth/test/mock-d1.ts` (or add `src/lib/mcq/test/mock-d1-mcq.ts`)
 
 
 
-### Phase 4: API Routes — PLANNED
+### Phase 4: API Routes — COMPLETED
 
 **Objective:** Expose MCQ operations via authenticated JSON API route handlers.
 
@@ -942,9 +942,9 @@ Extend `src/lib/auth/test/mock-d1.ts` (or add `src/lib/mcq/test/mock-d1-mcq.ts`)
 
 **Acceptance criteria:**
 
-- [ ] All endpoints match PRD contracts
-- [ ] Authentication enforced on every route
-- [ ] TC-M4-01–TC-M4-14 GREEN
+- [x] All endpoints match PRD contracts
+- [x] Authentication enforced on every route
+- [x] TC-M4-01–TC-M4-14 GREEN
 
 **Exit criteria:** All Phase 4 tests GREEN; user approves Phase 5.
 
@@ -1495,10 +1495,10 @@ When working with this PRD:
 
 ## Current Status
 
-**Last Updated:** September 1, 2026
-**Current Phase:** Phase 3 — MCQ Service Layer
+**Last Updated:** September 2, 2026
+**Current Phase:** Phase 4 — API Routes
 **Status:** COMPLETED
-**Next Steps:** Await user approval to begin Phase 4 (API routes).
+**Next Steps:** Await user approval to begin Phase 5 (MCQ list page).
 
 **Phase completion log:**
 
@@ -1507,8 +1507,9 @@ When working with this PRD:
 | ----- | --------- | --------------------- |
 | 1     | COMPLETED | Yes                   |
 | 2     | COMPLETED | Yes                   |
-| 3     | COMPLETED | Yes (Phase 3 started) |
-| 4     | PLANNED   | —                     |
+| 3     | COMPLETED | Yes                   |
+| 4     | COMPLETED | Yes (Phase 4 started) |
+| 5     | PLANNED   | —                     |
 | 4     | PLANNED | —                |
 | 5     | PLANNED | —                |
 | 6     | PLANNED | —                |
