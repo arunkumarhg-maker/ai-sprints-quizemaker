@@ -1102,7 +1102,7 @@ Extend `src/lib/auth/test/mock-d1.ts` (or add `src/lib/mcq/test/mock-d1-mcq.ts`)
 
 
 
-### Phase 8: Attempts Functionality — PLANNED
+### Phase 8: Attempts Functionality — COMPLETED
 
 **Objective:** Complete attempt recording integration; verify persistence and service/API edge cases.
 
@@ -1137,9 +1137,9 @@ Extend `src/lib/auth/test/mock-d1.ts` (or add `src/lib/mcq/test/mock-d1-mcq.ts`)
 
 **Acceptance criteria:**
 
-- [ ] Attempts persist with correct `is_correct`
-- [ ] Invalid attempt inputs rejected
-- [ ] TC-M8-01–TC-M8-06 GREEN
+- [x] Attempts persist with correct `is_correct`
+- [x] Invalid attempt inputs rejected
+- [x] TC-M8-01–TC-M8-06 GREEN
 
 **Exit criteria:** All Phase 8 tests GREEN; user approves Phase 9.
 
@@ -1248,6 +1248,17 @@ Extend `src/lib/auth/test/mock-d1.ts` (or add `src/lib/mcq/test/mock-d1-mcq.ts`)
 | `src/components/mcq/mcq-preview-dialog.tsx` | Preview dialog             |
 | `src/components/mcq/mcq-delete-dialog.tsx`  | Delete confirmation        |
 
+
+
+
+### Attempt Lifecycle
+
+1. **Preview** — Owner opens preview from the list; `GET /api/mcqs/[id]/preview` returns question and choices without `isCorrect`.
+2. **Submit** — Client posts `{ selectedChoiceId }` to `POST /api/mcqs/[id]/attempts` with session cookie.
+3. **Validate** — Route requires auth (401 if missing). Service verifies MCQ ownership and that the choice belongs to that MCQ (400 if not).
+4. **Persist** — `recordAttempt` inserts a row into `mcq_attempts` with `is_correct` derived from the selected choice. Multiple attempts per user per MCQ are allowed.
+5. **Respond** — API returns `{ attempt, isCorrect }` with status 201; preview dialog shows success/failure feedback.
+6. **Cleanup** — Deleting an MCQ cascades attempts (via mock D1 and D1 `ON DELETE CASCADE` on `mcq_id`). Updating an MCQ clears prior attempts before replacing choices.
 
 
 
@@ -1496,9 +1507,9 @@ When working with this PRD:
 ## Current Status
 
 **Last Updated:** September 2, 2026
-**Current Phase:** Phase 7 — Frontend Preview and Delete Flows
+**Current Phase:** Phase 8 — Attempts Functionality
 **Status:** COMPLETED
-**Next Steps:** Await user approval to begin Phase 8 (attempts hardening).
+**Next Steps:** Await user approval to begin Phase 9 (integration testing and final validation).
 
 **Phase completion log:**
 
@@ -1511,8 +1522,8 @@ When working with this PRD:
 | 4     | COMPLETED | Yes                   |
 | 5     | COMPLETED | Yes                   |
 | 6     | COMPLETED | Yes (Phase 6 started) |
-| 7     | COMPLETED | Yes (Phase 7 started) |
-| 8     | PLANNED   | —                     |
-| 9     | PLANNED | —                |
+| 7     | COMPLETED | Yes                   |
+| 8     | COMPLETED | Yes (Phase 8 started) |
+| 9     | PLANNED   | —                     |
 
 
