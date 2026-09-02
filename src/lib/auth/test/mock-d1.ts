@@ -58,7 +58,7 @@ class MockPreparedStatement {
 	}
 
 	async run(): Promise<{ success: true }> {
-		this.db.execute(this.sql, this.bindings);
+		this.db.runStatement(this.sql, this.bindings);
 		return { success: true };
 	}
 
@@ -83,7 +83,7 @@ export class MockD1Database {
 		return new MockPreparedStatement(sql.replace(/\s+/g, " ").trim(), this);
 	}
 
-	private execute(sql: string, bindings: unknown[]): void {
+	runStatement(sql: string, bindings: unknown[]): void {
 		const normalized = sql.replace(/\s+/g, " ").trim();
 
 		if (
@@ -262,7 +262,7 @@ export class MockD1Database {
 		}
 	}
 
-	private query<T>(sql: string, bindings: unknown[]): T[] {
+	query<T>(sql: string, bindings: unknown[]): T[] {
 		const normalized = sql.replace(/\s+/g, " ").trim();
 
 		if (

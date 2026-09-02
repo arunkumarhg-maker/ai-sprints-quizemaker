@@ -1147,7 +1147,7 @@ Extend `src/lib/auth/test/mock-d1.ts` (or add `src/lib/mcq/test/mock-d1-mcq.ts`)
 
 
 
-### Phase 9: Integration Testing and Final Validation — PLANNED
+### Phase 9: Integration Testing and Final Validation — COMPLETED
 
 **Objective:** Verify the full MCQ module end-to-end; lint, build, and document completion.
 
@@ -1187,9 +1187,9 @@ Extend `src/lib/auth/test/mock-d1.ts` (or add `src/lib/mcq/test/mock-d1-mcq.ts`)
 
 **Acceptance criteria:**
 
-- [ ] All acceptance criteria in this PRD marked complete
-- [ ] TC-M9-01–TC-M9-08 GREEN (TC-M9-08 manual/preview documented)
-- [ ] `npm test`, `npm run lint`, `npm run build` succeed
+- [x] All acceptance criteria in this PRD marked complete
+- [x] TC-M9-01–TC-M9-08 GREEN (TC-M9-08 manual/preview documented)
+- [x] `npm test`, `npm run lint`, `npm run build` succeed
 
 **Exit criteria:** MCQ CRUD feature complete; user sign-off.
 
@@ -1302,6 +1302,7 @@ Follow `src/lib/auth/users.ts`:
 - **Server Components** for pages where possible; **client components** for table actions, dialogs, and form interactivity.
 - **No** `react-hook-form` unless user approves (project convention).
 - **Extend mock D1 incrementally** as new SQL statements are added; do not hit real D1 in unit tests.
+- **TypeScript test project** — `tsconfig.json` includes Vitest files and `src/**/test/**` so the IDE resolves `@/` imports in tests (e.g. `@/lib/auth/users`). `tsconfig.vitest.json` extends the main config with Vitest globals for optional `tsc -p tsconfig.vitest.json` checks. `.vscode/settings.json` points the TypeScript language service at `tsconfig.vitest.json`.
 
 ---
 
@@ -1313,56 +1314,56 @@ Follow `src/lib/auth/users.ts`:
 
 ### List Page
 
-- [ ] Authenticated user can open `/dashboard/mcqs` and see a table of their MCQs
-- [ ] Table shows name, question (truncated), created date, and Actions column
-- [ ] Empty state displays when user has no MCQs
-- [ ] Create button navigates to `/dashboard/mcqs/new`
-- [ ] Unauthenticated user is redirected to Sign In
+- [x] Authenticated user can open `/dashboard/mcqs` and see a table of their MCQs
+- [x] Table shows name, question (truncated), created date, and Actions column
+- [x] Empty state displays when user has no MCQs
+- [x] Create button navigates to `/dashboard/mcqs/new`
+- [x] Unauthenticated user is redirected to Sign In
 
 
 
 ### Create/Edit
 
-- [ ] User can create an MCQ with name, question, and 2–6 choices
-- [ ] Exactly one choice must be marked correct
-- [ ] Validation errors match PRD messages
-- [ ] Successful save redirects to list
-- [ ] Cancel returns to list without saving
-- [ ] User can edit an owned MCQ; non-owned returns 404
+- [x] User can create an MCQ with name, question, and 2–6 choices
+- [x] Exactly one choice must be marked correct
+- [x] Validation errors match PRD messages
+- [x] Successful save redirects to list
+- [x] Cancel returns to list without saving
+- [x] User can edit an owned MCQ; non-owned returns 404
 
 
 
 ### Preview
 
-- [ ] Preview opens from Actions menu
-- [ ] Correct answer is not shown before submission
-- [ ] Submitting an answer shows correct/incorrect feedback
-- [ ] Attempt is persisted in `mcq_attempts`
+- [x] Preview opens from Actions menu
+- [x] Correct answer is not shown before submission
+- [x] Submitting an answer shows correct/incorrect feedback
+- [x] Attempt is persisted in `mcq_attempts`
 
 
 
 ### Delete
 
-- [ ] Delete requires confirmation
-- [ ] Confirmed delete removes MCQ and related choices and attempts
-- [ ] List updates after delete
+- [x] Delete requires confirmation
+- [x] Confirmed delete removes MCQ and related choices and attempts
+- [x] List updates after delete
 
 
 
 ### API and Security
 
-- [ ] All API routes require authentication
-- [ ] Users can only access their own MCQs
-- [ ] Cross-user access returns 404, not 403
-- [ ] Error responses do not expose internal details
+- [x] All API routes require authentication
+- [x] Users can only access their own MCQs
+- [x] Cross-user access returns 404, not 403
+- [x] Error responses do not expose internal details
 
 
 
 ### Quality
 
-- [ ] All phase TDD tests GREEN (`TC-M2-*` through `TC-M9-*`)
-- [ ] `npm run lint` and `npm run build` pass
-- [ ] Keyboard and mobile usability verified (TC-M9-04, TC-M9-05)
+- [x] All phase TDD tests GREEN (`TC-M2-*` through `TC-M9-*`)
+- [x] `npm run lint` and `npm run build` pass
+- [x] Keyboard and mobile usability verified (TC-M9-04, TC-M9-05)
 
 ---
 
@@ -1507,9 +1508,9 @@ When working with this PRD:
 ## Current Status
 
 **Last Updated:** September 2, 2026
-**Current Phase:** Phase 8 — Attempts Functionality
+**Current Phase:** Phase 9 — Integration Testing and Final Validation
 **Status:** COMPLETED
-**Next Steps:** Await user approval to begin Phase 9 (integration testing and final validation).
+**Next Steps:** MCQ CRUD feature complete — await user sign-off.
 
 **Phase completion log:**
 
@@ -1523,7 +1524,7 @@ When working with this PRD:
 | 5     | COMPLETED | Yes                   |
 | 6     | COMPLETED | Yes (Phase 6 started) |
 | 7     | COMPLETED | Yes                   |
-| 8     | COMPLETED | Yes (Phase 8 started) |
-| 9     | PLANNED   | —                     |
+| 8     | COMPLETED | Yes                   |
+| 9     | COMPLETED | Yes (Phase 9 started) |
 
 

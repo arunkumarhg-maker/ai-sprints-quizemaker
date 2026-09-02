@@ -11,10 +11,11 @@ the problem, the primary user, and the current state. Two or three sentences.
 Keep it current. An out-of-date description here misleads every future conversation.
 -->
 
-This is the Quiz Maker application. The Sprint 0 authentication module is fully implemented:
-Sign Up, Sign In, Logout, session management, protected routes, and Dashboard placeholder.
-All 59 TDD test cases (TC-1-01 through TC-6-08) pass. Quiz features are not yet built.
-The technical PRD in `ai-workspace/` is the source of truth for what is being built and
+This is the Quiz Maker application. Sprint 0 authentication and the MCQ CRUD module are
+fully implemented: Sign Up, Sign In, Logout, session management, protected routes, Dashboard,
+and multiple-choice question create/list/edit/preview/delete with attempt recording.
+All auth TDD cases (TC-1-01 through TC-6-08) and MCQ phase tests (TC-M2-01 through TC-M9-08)
+pass. The technical PRD in `ai-workspace/` is the source of truth for what is being built and
 for the current phase of work.
 
 ## Stack

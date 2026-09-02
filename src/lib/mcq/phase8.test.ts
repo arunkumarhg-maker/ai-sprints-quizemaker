@@ -176,7 +176,7 @@ describe("Phase 8 MCQ attempts hardening (TC-M8-01 – TC-M8-06)", () => {
 		);
 
 		expect(response.status).toBe(401);
-		const body = await response.json();
+		const body = (await response.json()) as { error: string };
 		expect(body.error).toBe("Unauthorized");
 		expect(getMockMcqAttemptCount(db, created.id)).toBe(0);
 	});
@@ -198,7 +198,7 @@ describe("Phase 8 MCQ attempts hardening (TC-M8-01 – TC-M8-06)", () => {
 		);
 
 		expect(response.status).toBe(400);
-		const body = await response.json();
+		const body = (await response.json()) as { error: string };
 		expect(body.error).toBe(MCQ_MESSAGES.invalidSelectedChoice);
 		expect(getMockMcqAttemptCount(db, firstMcq.id)).toBe(0);
 	});

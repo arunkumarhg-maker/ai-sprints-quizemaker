@@ -1,5 +1,7 @@
 {
 	"files.associations": {
 		"wrangler.json": "jsonc"
-	}
+	},
+	"typescript.tsconfig": "tsconfig.vitest.json",
+	"typescript.preferences.includePackageJsonAutoImports": "auto"
 }
