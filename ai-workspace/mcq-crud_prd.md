@@ -952,7 +952,7 @@ Extend `src/lib/auth/test/mock-d1.ts` (or add `src/lib/mcq/test/mock-d1-mcq.ts`)
 
 
 
-### Phase 5: Frontend — MCQ List Page — PLANNED
+### Phase 5: Frontend — MCQ List Page — COMPLETED
 
 **Objective:** Build the protected MCQ listing page with table, actions menu, and create navigation.
 
@@ -990,10 +990,10 @@ Extend `src/lib/auth/test/mock-d1.ts` (or add `src/lib/mcq/test/mock-d1-mcq.ts`)
 
 **Acceptance criteria:**
 
-- [ ] Table matches PRD columns
-- [ ] Create button works
-- [ ] Actions menu renders three items
-- [ ] TC-M5-01–TC-M5-08 GREEN
+- [x] Table matches PRD columns
+- [x] Create button works
+- [x] Actions menu renders three items
+- [x] TC-M5-01–TC-M5-08 GREEN
 
 **Exit criteria:** All Phase 5 tests GREEN; user approves Phase 6.
 
@@ -1496,9 +1496,9 @@ When working with this PRD:
 ## Current Status
 
 **Last Updated:** September 2, 2026
-**Current Phase:** Phase 4 — API Routes
+**Current Phase:** Phase 5 — Frontend MCQ List Page
 **Status:** COMPLETED
-**Next Steps:** Await user approval to begin Phase 5 (MCQ list page).
+**Next Steps:** Await user approval to begin Phase 6 (create/edit page).
 
 **Phase completion log:**
 
@@ -1508,8 +1508,9 @@ When working with this PRD:
 | 1     | COMPLETED | Yes                   |
 | 2     | COMPLETED | Yes                   |
 | 3     | COMPLETED | Yes                   |
-| 4     | COMPLETED | Yes (Phase 4 started) |
-| 5     | PLANNED   | —                     |
+| 4     | COMPLETED | Yes                   |
+| 5     | COMPLETED | Yes (Phase 5 started) |
+| 6     | PLANNED   | —                     |
 | 4     | PLANNED | —                |
 | 5     | PLANNED | —                |
 | 6     | PLANNED | —                |
