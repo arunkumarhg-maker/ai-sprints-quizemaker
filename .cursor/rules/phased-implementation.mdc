@@ -1,0 +1,47 @@
+---
+description: Phase gates, user approval, and git commit/push after each implementation phase
+alwaysApply: true
+---
+
+# Phased Implementation Workflow
+
+This project ships features in sequential PRD phases (see `ai-workspace/mcq-crud_prd.md`
+and `ai-workspace/QUIZ_MAKER_TECHNICAL_PRD.md`). Follow this workflow for every phase.
+
+## During a phase
+
+- Implement **only** the current phase scope from the active PRD.
+- Use TDD: write the phase tests first (RED), implement until GREEN, then refactor.
+- Run `npm test`, `npm run lint`, and `npm run build` before claiming the phase complete.
+- Update the PRD: phase status, acceptance criteria, and Current Status section.
+
+## Phase completion gate (mandatory stop)
+
+When a phase is complete, **stop** and do **not** start the next phase. Send the user:
+
+1. What was completed (deliverables and files)
+2. Test results (phase test IDs and full suite)
+3. Any decisions or issues needing attention
+4. An explicit request for approval of the completed phase
+
+Wait for the user to approve before committing or continuing.
+
+## After user approval
+
+Once the user approves the completed phase:
+
+1. **Commit** all relevant changes on the **current branch** (do not switch branches unless asked).
+2. **Push** to `origin` on that same branch (`git push` or `git push -u origin HEAD` if untracked).
+3. Use a commit message that names the phase and summarizes the outcome (1–2 sentences, focus on why).
+4. Do not commit secrets (`.dev.vars`, credentials) or unrelated local artifacts (`.next/`, `.wrangler/`).
+
+## Starting the next phase
+
+- Begin the next phase **only** when the user explicitly authorizes it (e.g. "approve Phase 3" or "start Phase 4").
+- Never auto-advance from one phase to the next in a single turn.
+
+## Git safety
+
+- Do not force-push, amend, or rewrite history unless the user explicitly requests it.
+- Do not commit unless the user has approved the phase or explicitly asked for a commit.
+- Do not deploy or apply remote D1 migrations unless the user explicitly requests it.

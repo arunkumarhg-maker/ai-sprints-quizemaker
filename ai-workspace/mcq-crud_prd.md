@@ -833,7 +833,7 @@ Extend `src/lib/auth/test/mock-d1.ts` (or add `src/lib/mcq/test/mock-d1-mcq.ts`)
 
 
 
-### Phase 3: MCQ Service Layer — PLANNED
+### Phase 3: MCQ Service Layer — COMPLETED
 
 **Objective:** Implement business logic and D1 operations for MCQs, choices, and attempts.
 
@@ -883,9 +883,9 @@ Extend `src/lib/auth/test/mock-d1.ts` (or add `src/lib/mcq/test/mock-d1-mcq.ts`)
 
 **Acceptance criteria:**
 
-- [ ] All validation rules enforced in service layer
-- [ ] Ownership checks on all single-resource operations
-- [ ] TC-M3-01–TC-M3-18 GREEN
+- [x] All validation rules enforced in service layer
+- [x] Ownership checks on all single-resource operations
+- [x] TC-M3-01–TC-M3-18 GREEN
 
 **Exit criteria:** All Phase 3 tests GREEN; user approves Phase 4.
 
@@ -1496,9 +1496,9 @@ When working with this PRD:
 ## Current Status
 
 **Last Updated:** September 1, 2026
-**Current Phase:** Phase 2 — Database Migrations and Models
+**Current Phase:** Phase 3 — MCQ Service Layer
 **Status:** COMPLETED
-**Next Steps:** Await user approval to begin Phase 3 (MCQ service layer).
+**Next Steps:** Await user approval to begin Phase 4 (API routes).
 
 **Phase completion log:**
 
@@ -1506,8 +1506,9 @@ When working with this PRD:
 | Phase | Status    | Approved by user      |
 | ----- | --------- | --------------------- |
 | 1     | COMPLETED | Yes                   |
-| 2     | COMPLETED | Yes (Phase 2 started) |
-| 3     | PLANNED   | —                     |
+| 2     | COMPLETED | Yes                   |
+| 3     | COMPLETED | Yes (Phase 3 started) |
+| 4     | PLANNED   | —                     |
 | 4     | PLANNED | —                |
 | 5     | PLANNED | —                |
 | 6     | PLANNED | —                |

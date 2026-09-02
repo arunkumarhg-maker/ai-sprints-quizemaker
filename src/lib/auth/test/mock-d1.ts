@@ -213,10 +213,52 @@ export class MockD1Database {
 		}
 
 		if (normalized.startsWith("DELETE FROM mcqs WHERE id =")) {
-			const [id] = bindings as string[];
-			this.mcqAttempts = this.mcqAttempts.filter((attempt) => attempt.mcq_id !== id);
+			const [id, createdByUserId] = bindings as string[];
+			const mcq = this.mcqs.find((item) => item.id === id);
+			if (!mcq) {
+				return;
+			}
+			if (createdByUserId !== undefined && mcq.created_by_user_id !== createdByUserId) {
+				return;
+			}
+			this.mcqAttempts = this.mcqAttempts.filter(
+				(attempt) => attempt.mcq_id !== id,
+			);
 			this.mcqChoices = this.mcqChoices.filter((choice) => choice.mcq_id !== id);
-			this.mcqs = this.mcqs.filter((mcq) => mcq.id !== id);
+			this.mcqs = this.mcqs.filter((item) => item.id !== id);
+			return;
+		}
+
+		if (normalized.startsWith("DELETE FROM mcq_choices WHERE mcq_id =")) {
+			const [mcq_id] = bindings as string[];
+			this.mcqChoices = this.mcqChoices.filter(
+				(choice) => choice.mcq_id !== mcq_id,
+			);
+			return;
+		}
+
+		if (normalized.startsWith("DELETE FROM mcq_attempts WHERE mcq_id =")) {
+			const [mcq_id] = bindings as string[];
+			this.mcqAttempts = this.mcqAttempts.filter(
+				(attempt) => attempt.mcq_id !== mcq_id,
+			);
+		}
+
+		if (
+			normalized.startsWith(
+				"UPDATE mcqs SET name = ?1, question = ?2, updated_at = ?3 WHERE id = ?4 AND created_by_user_id = ?5",
+			)
+		) {
+			const [name, question, updated_at, id, created_by_user_id] =
+				bindings as string[];
+			const mcq = this.mcqs.find(
+				(item) => item.id === id && item.created_by_user_id === created_by_user_id,
+			);
+			if (mcq) {
+				mcq.name = name;
+				mcq.question = question;
+				mcq.updated_at = updated_at;
+			}
 		}
 	}
 
@@ -257,17 +299,69 @@ export class MockD1Database {
 		}
 
 		if (normalized.includes("FROM mcqs") && normalized.includes("WHERE id =")) {
-			const [id] = bindings as string[];
-			const row = this.mcqs.find((mcq) => mcq.id === id);
+			const [id, createdByUserId] = bindings as string[];
+			const row = this.mcqs.find((mcq) => {
+				if (mcq.id !== id) {
+					return false;
+				}
+				if (createdByUserId !== undefined) {
+					return mcq.created_by_user_id === createdByUserId;
+				}
+				return true;
+			});
 			return row ? ([row] as T[]) : [];
 		}
 
 		if (
+			normalized.includes("FROM mcqs m") &&
+			normalized.includes("WHERE m.created_by_user_id =")
+		) {
+			const [userId] = bindings as string[];
+			const rows = this.mcqs
+				.filter((mcq) => mcq.created_by_user_id === userId)
+				.sort(
+					(a, b) =>
+						new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
+				)
+				.map((mcq) => ({
+					...mcq,
+					choice_count: this.mcqChoices.filter(
+						(choice) => choice.mcq_id === mcq.id,
+					).length,
+				}));
+			return rows as T[];
+		}
+
+		if (
 			normalized.includes("FROM mcq_choices") &&
+			normalized.includes("WHERE mcq_id =") &&
+			!normalized.includes("WHERE id =")
+		) {
+			const [mcq_id] = bindings as string[];
+			const rows = this.mcqChoices
+				.filter((choice) => choice.mcq_id === mcq_id)
+				.sort((a, b) => a.position - b.position);
+			return rows as T[];
+		}
+
+		if (
+			normalized.includes("FROM mcq_choices") &&
+			normalized.includes("WHERE id =") &&
+			normalized.includes("AND mcq_id =")
+		) {
+			const [choiceId, mcqId] = bindings as string[];
+			const row = this.mcqChoices.find(
+				(choice) => choice.id === choiceId && choice.mcq_id === mcqId,
+			);
+			return row ? ([row] as T[]) : [];
+		}
+
+		if (
+			normalized.includes("FROM mcq_attempts") &&
 			normalized.includes("WHERE mcq_id =")
 		) {
 			const [mcq_id] = bindings as string[];
-			const rows = this.mcqChoices.filter((choice) => choice.mcq_id === mcq_id);
+			const rows = this.mcqAttempts.filter((attempt) => attempt.mcq_id === mcq_id);
 			return rows as T[];
 		}
 
@@ -293,6 +387,13 @@ export class MockD1Database {
 		}
 		return this.mcqChoices.length;
 	}
+
+	getMcqAttemptCount(mcqId?: string): number {
+		if (mcqId) {
+			return this.mcqAttempts.filter((attempt) => attempt.mcq_id === mcqId).length;
+		}
+		return this.mcqAttempts.length;
+	}
 }
 
 export function createMockD1Database(): D1Database {
@@ -307,4 +408,9 @@ export function getMockSessionCount(db: D1Database): number {
 /** Test helper — not for production use. */
 export function getMockMcqChoiceCount(db: D1Database, mcqId?: string): number {
 	return (db as unknown as MockD1Database).getMcqChoiceCount(mcqId);
+}
+
+/** Test helper — not for production use. */
+export function getMockMcqAttemptCount(db: D1Database, mcqId?: string): number {
+	return (db as unknown as MockD1Database).getMcqAttemptCount(mcqId);
 }
